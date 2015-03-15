@@ -53,7 +53,17 @@ class DynamicConfigPuller(object):
 
         self.cfgRefresh_dcall = None
 
-        self.minshare = 1
+        try:
+            self.minshare = int(local.AGREED_UPON_MINSHARE)
+        except ValueError:
+            print "Current value : %s. Must be integer parsable" % (local.AGREED_UPON_MINSHARE)
+            self.minshare = 2e10
+        except AttributeError:
+            print "Minshare not defined."
+            self.minshare = 2e10
+        except:
+            self.minshare = 2e10
+
         self.version = None
 
 
